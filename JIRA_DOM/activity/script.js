@@ -62,20 +62,19 @@ for(let i= 0 ; i< modalFilters.length;i++){
 
 }
 
+//textarea
 descBox.addEventListener("keydown" , function(e){
     if(e.key=="Enter"){
         let task = descBox.value;
          console.log("task is ", task, "cColor ", cColor);
-        
-        createTicket(task , cColor);
-        
-        // tiket create 
-        // ticket create 
+        // tiket create
+        createTicket(task , cColor); 
+    
         //  clean up 
         cColor = colors[colors.length-1];
         modalContainer.style.display = "none";
         flag = false;
-        descBox.value = ""
+        descBox.value = "";
     }
 })
 
@@ -90,18 +89,22 @@ function createTicket(task , cColor){
     // </div>
     let ticketContainer = document.createElement("div");
     ticketContainer.setAttribute("class" , "ticket-container");
+    let id = uid();
     ticketContainer.innerHTML =` <div class="ticket-color ${cColor}"></div>
     <div class="ticket_sub-container">
-          <h3 class="ticket-id">#sampleId</h3>
+          <h3 class="ticket-id">#${id}</h3>
           <div class="ticket-desc">${task}</div>
       </div>`;
      
     mainContainer.appendChild(ticketContainer);
     let colorStripeElement = ticketContainer.querySelector(".ticket-color");
-    handleTicket(colorStripeElement);
+    handleColorChange(colorStripeElement);
+    handleDeleteContainer(ticketContainer);
 }
 
-function handleTicket(colorStripeElement){
+
+
+function handleColorChange(colorStripeElement){
     colorStripeElement.addEventListener("click", function(){
         let classes = colorStripeElement.classList;
         let initColor = classes[1];
@@ -111,4 +114,22 @@ function handleTicket(colorStripeElement){
         colorStripeElement.classList.remove(initColor);
         colorStripeElement.classList.add(newColor);
     })
+}
+
+
+removeBtn.addEventListener("click" , function(){
+    if(deleteState == false){
+        removeBtn.style.backgroundColor = "rgb(100, 71, 26)";
+    } else {
+        removeBtn.style.backgroundColor = "rgb(146, 102, 35)";
+    }
+    deleteState =!deleteState;
+})
+
+function handleDeleteContainer(ticketContainer){
+    ticketContainer.addEventListener("click" ,function(){
+        if(deleteState == true){
+            ticketContainer.remove();
+        }
+    });
 }
