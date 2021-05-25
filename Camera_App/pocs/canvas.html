@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin:0px;
+        }
+        .colors{
+            width:80vw;
+            height:5rem;
+            border:2px solid;
+            margin:0 auto;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .color{
+            height:70%;
+            width:20%;
+        }
+
+        .red{
+            background-color: lightcoral;
+        }
+        .green{
+            background-color: lightgreen;
+        }
+        .blue{
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+    <!-- <h>Canvas Board</h> -->
+    <div class="colors">
+        <div class="color red"></div>
+        <div class="color green"></div>
+        <div class="color blue"></div>
+    </div>
+    <canvas class="board"></canvas>
+    <script>
+            let board = document.querySelector(".board");
+
+            let tool = board.getContext("2d");
+            board.height = window.innerHeight;
+            board.width = window.innerWidth;
+
+
+            // tool.fillStyle = "lightgreen";
+            // tool.fillRect(0 , 0 , window.innerWidth/2 , window.innerHeight/2);
+
+            // tool.strokeStyle = "yellow";
+            // tool.lineWidth = 10;
+            // tool.strokeRect(10,  10 , window.innerWidth/2 , window.innerHeight/2);
+            // tool.fillStyle = "red";
+            // tool.fillRect(40 , 40 , window.innerWidth/2 , window.innerHeight/2);
+
+            // tool.strokeStyle = "yellow";
+            // tool.lineWidth = 10;
+            // tool.beginPath();
+            // tool.moveTo(100, 200);
+            // tool.lineTo(200 , 50);
+            // tool.lineTo(200 , 200);
+            // tool.moveTo(50 , 300);
+            // tool.lineTo(200 , 300);
+            // tool.stroke();
+
+            //new path
+            // tool.beginPath();
+            // tool.moveTo(200,300);
+            // tool.strokeStyle = "red";
+            // tool.lineWidth=5;
+            // tool.lineTo(200 ,200);
+            // tool.moveTo(250 , 150);
+            // tool.lineTo(200, 300);
+            // tool.stroke();
+             
+
+            //draw a line
+            let isDown = false;
+            tool.strokeStyle = "red";
+            tool.lineWidth = 10;
+            let colors = document.querySelectorAll(".color");
+            let colorContainer = document.querySelector(".colors");
+            for(let i= 0; i < colors.length ;i++){
+                colors[i].addEventListener("click" , function(){
+                    let newcolor =colors[i].classList[1];
+                    tool.strokeStyle ="light"+newcolor;
+                })
+                
+
+            }
+
+            board.addEventListener("mousedown" , function(e){
+                tool.beginPath();
+                tool.moveTo(e.clientX ,getY (e.clientY));
+                isDown = true;
+            })
+            board.addEventListener("mousemove" , function(e){
+                if(isDown==true){
+                    
+                    tool.lineTo(e.clientX , getY(e.clientY));
+                    tool.stroke();
+                    // document.addEventListener("mouseup" . function(){
+                    //     isDown = false;
+                    // })
+                }
+                
+            })
+            board.addEventListener("mouseup" , function(e){
+                
+                // tool.lineTo(e.clientX , e.clientY);
+                // tool.stroke();
+                isDown = false;
+            })
+            
+            function getY(originalY){
+                let obj = colorContainer.getBoundingClientRect();
+                let height = obj.height;
+                return originalY-height;
+            }
+            
+   
+   </script>
+
+</body>
+</html>
