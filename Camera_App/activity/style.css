@@ -24,3 +24,23 @@ body{
 .click{
     top: 45%;  
 }
+
+.filters{
+    height:50vh;
+    width:20vw;
+    border:3px solid white;
+    background-color: pink;
+   
+    display: flex;
+    
+}
+
+.filter{
+    height:20%;
+    width:100%;
+    /* background-color:blue; */
+}
+
+.red{
+    background-color:
+}

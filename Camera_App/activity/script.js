@@ -55,3 +55,19 @@ recordBtn.addEventListener("click", function () {
     }
     isRecording = !isRecording
 })
+
+captureImgBtn.addEventListener("click" , function(){
+    //canvas
+    
+    let canvas = document.createElement("canvas");
+    canvas.height = videoElem.videoHeight;
+    canvas.width = videoElem.videoWidth;
+    let tool = canvas.getContext("2d");
+    tool.drawImage(videoElem , 0 , 0);
+    let  url = canvas.toDataURL();
+    let a = document.createElement("a");
+    a.download = "file.png";
+    a.href = url;
+    a.click();
+    a.remove();
+})
