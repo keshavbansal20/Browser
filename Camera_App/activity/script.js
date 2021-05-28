@@ -1,7 +1,13 @@
 let videoElem = document.querySelector("video");
 // 1. 
 let recordBtn = document.querySelector(".record");
+let filterArr = document.querySelector(".filter");
+let filterOverlay = document.querySelectorAll(".filter_overlay");
+let timings = document.querySelector(".timing");
 let isRecording = false;
+let filterColor = "";
+let counter = 0;
+let clearObj;
 // user  requirement send 
 let constraint = {
     audio: true, video: true
@@ -71,3 +77,32 @@ captureImgBtn.addEventListener("click" , function(){
     a.click();
     a.remove();
 })
+
+//filter array
+for(let i = 0 ; i < filterArr.length ; i++){
+    filterArr[i].addEventListener("click" , function(){
+        filterColor = filterArr[i].style.backgroundColor;
+        filterOverlay.style.backgroundColor = filterColor;
+    })
+}
+
+function startTimer() {
+    timings.style.display = "block";
+    function fn() {
+        // hours
+        let hours = Number.parseInt(counter / 3600);
+        let RemSeconds = counter % 3600;
+        let mins = Number.parseInt(RemSeconds / 60);
+        let seconds = RemSeconds % 60;
+        hours = hours < 10 ? `0${hours}` : hours;
+        mins = mins < 10 ? `0${mins}` : `${mins}`;
+        seconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+        timings.innerText = `${hours}:${mins}:${seconds}`
+        counter++;
+    }
+    clearObj = setInterval(fn, 1000);
+}
+function stopTimer() {
+    timings.style.display = "none";
+    clearInterval(clearObj);
+}
